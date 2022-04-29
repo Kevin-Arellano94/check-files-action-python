@@ -1,0 +1,31 @@
+name: Python Script in Actions
+description: "Create an action in Python"
+branding:
+  icon: 'terminal'
+  color: 'blue'
+on: push
+
+jobs:
+  makewarn:
+    runs-on: windows-latest
+    steps:
+      - name: Fail
+        run: if (${{ runner.os }} -ne Windows { echo "::error::Python action only supported on Windows. Please change your runner to windows-2022, windows-2019, or even better windows-latest." }
+  python3runner:
+    runs-on: windows-latest
+
+    steps:
+
+          
+      - name: Install Python 3
+        run: >
+         choco install python3 --no-progress
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ env.OWNER }}/${{ env.REPO }}
+          path: ${{ github.events.input.path }}
+      - name: Run Python action
+        run: |  
+           cd D:\a\${{ env.REPO }}/${{ env.REPO }}
+           python workflow.py
+           Exit $LASTEXITCODE
